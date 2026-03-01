@@ -234,7 +234,6 @@ if (!$summary) {
                 <div class="stat-label">Unique Customers</div>
             </div>
         
-        <!-- Top Events -->
         <div class="report-section">
             <h3 style="margin-bottom: 20px;">Top Performing Events</h3>
             <?php if(empty($top_events)): ?>
