@@ -14,7 +14,6 @@ The INES Event Ticket Generator system will include the following features:
 - Server-side input validation and error handling
 - MVC (Model-View-Controller) architecture with separation of concerns
 
----
 
 ## Out-of-Scope
 The following features are not included in this project:
@@ -25,8 +24,6 @@ The following features are not included in this project:
 - Multiple event management
 - Role-based access control beyond basic admin login
 - Third-party APIs or external libraries
-
----
 
 ## Non-Functional Requirements (NFRs)
 The system must satisfy the following non-functional requirements:
