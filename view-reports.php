@@ -233,17 +233,6 @@ if (!$summary) {
                 <div class="stat-value"><?php echo $summary['unique_customers']; ?></div>
                 <div class="stat-label">Unique Customers</div>
             </div>
-        </div>
-        
-        <!-- Sales Chart -->
-        <div class="chart-container">
-            <h3 style="margin-bottom: 20px;">Daily Sales</h3>
-            <?php if(empty($daily_sales)): ?>
-                <div class="no-data">No sales data available for this period</div>
-            <?php else: ?>
-                <canvas id="salesChart" style="width:100%; height:300px;"></canvas>
-            <?php endif; ?>
-        </div>
         
         <!-- Top Events -->
         <div class="report-section">

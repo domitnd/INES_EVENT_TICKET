@@ -9,7 +9,7 @@ if (!isset($_SESSION['admin_id']) || $_SESSION['admin_type'] != 'organizer') {
 
 $organizer_id = $_SESSION['admin_id'];
 
-// Get only this organizer's events - FIXED: Proper prepare, execute, fetch
+// Get events
 $stmt = $pdo->prepare("
     SELECT e.*, 
            (SELECT COUNT(*) FROM tickets WHERE event_id = e.id) as tickets_sold,
@@ -19,10 +19,6 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute();
 $events = $stmt->fetchAll();
-
-// If you want to filter by organizer_id (if you have that column)
-// Add: WHERE e.organizer_id = ? to the query and pass parameter
-// $stmt->execute([$organizer_id]);
 ?>
 <!DOCTYPE html>
 <html>
@@ -250,8 +246,11 @@ $events = $stmt->fetchAll();
                         </div>
                         
                         <div class="event-actions">
+                            <!-- VIEW button - links to public event page -->
                             <a href="../event.php?id=<?php echo $event['id']; ?>" class="view-btn" target="_blank">View</a>
+                            <!-- EDIT button -->
                             <a href="edit-event.php?id=<?php echo $event['id']; ?>" class="edit-btn">Edit</a>
+                            <!-- DELETE button - links to manage-events with delete parameter -->
                             <a href="manage-events.php?delete=<?php echo $event['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this event? This action cannot be undone.')">Delete</a>
                         </div>
                     </div>

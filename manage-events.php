@@ -29,22 +29,24 @@ if (isset($_GET['delete'])) {
 // Get events
 if ($user_type == 'admin') {
     // Admin sees all events
-    $events = $pdo->query("
+    $stmt = $pdo->query("
         SELECT e.*, 
                (SELECT COUNT(*) FROM tickets WHERE event_id = e.id) as tickets_sold,
                (SELECT SUM(total_amount) FROM tickets WHERE event_id = e.id) as revenue
         FROM events e
         ORDER BY e.event_date DESC
-    ")->fetchAll();
+    ");
+    $events = $stmt->fetchAll();
 } else {
-    // Organizer sees only their events
-    $events = $pdo->query("
+    // Organizer sees only their events (if you have organizer_id column)
+    $stmt = $pdo->query("
         SELECT e.*, 
                (SELECT COUNT(*) FROM tickets WHERE event_id = e.id) as tickets_sold,
                (SELECT SUM(total_amount) FROM tickets WHERE event_id = e.id) as revenue
         FROM events e
         ORDER BY e.event_date DESC
-    ")->fetchAll();
+    ");
+    $events = $stmt->fetchAll();
 }
 ?>
 <!DOCTYPE html>
@@ -66,6 +68,23 @@ if ($user_type == 'admin') {
         .status-ongoing { background: #fff3cd; color: #856404; }
         .status-past { background: #f8d7da; color: #721c24; }
         
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .view-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 13px;
+            display: inline-block;
+        }
+        
         .edit-btn {
             background: #28a745;
             color: white;
@@ -74,7 +93,7 @@ if ($user_type == 'admin') {
             border-radius: 4px;
             text-decoration: none;
             font-size: 13px;
-            margin-right: 5px;
+            display: inline-block;
         }
         
         .delete-btn {
@@ -83,8 +102,38 @@ if ($user_type == 'admin') {
             border: none;
             padding: 5px 10px;
             border-radius: 4px;
-            cursor: pointer;
+            text-decoration: none;
             font-size: 13px;
+            display: inline-block;
+        }
+        
+        .view-btn:hover, .edit-btn:hover, .delete-btn:hover {
+            opacity: 0.8;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
         }
     </style>
 </head>
@@ -152,8 +201,14 @@ if ($user_type == 'admin') {
                             <td>RWF <?php echo number_format($event['revenue'] ?: 0); ?></td>
                             <td><span class="event-status status-<?php echo $status; ?>"><?php echo $status_text; ?></span></td>
                             <td>
-                                <a href="edit-event.php?id=<?php echo $event['id']; ?>" class="edit-btn">Edit</a>
-                                <a href="?delete=<?php echo $event['id']; ?>" class="delete-btn" onclick="return confirm('Delete this event? All ticket data will be lost.')">Delete</a>
+                                <div class="action-buttons">
+                                    <!-- VIEW button - links to public event page -->
+                                    <a href="../event.php?id=<?php echo $event['id']; ?>" class="view-btn" target="_blank">View</a>
+                                    <!-- EDIT button -->
+                                    <a href="edit-event.php?id=<?php echo $event['id']; ?>" class="edit-btn">Edit</a>
+                                    <!-- DELETE button -->
+                                    <a href="?delete=<?php echo $event['id']; ?>" class="delete-btn" onclick="return confirm('Delete this event? All ticket data will be lost.')">Delete</a>
+                                </div>
                             </td>
                         </tr>
                         <?php endforeach; ?>
