@@ -27,88 +27,85 @@ if (isset($_GET['delete'])) {
 }
 
 // Get events
-if ($user_type == 'admin') {
-    // Admin sees all events
-    $stmt = $pdo->query("
-        SELECT e.*, 
-               (SELECT COUNT(*) FROM tickets WHERE event_id = e.id) as tickets_sold,
-               (SELECT SUM(total_amount) FROM tickets WHERE event_id = e.id) as revenue
-        FROM events e
-        ORDER BY e.event_date DESC
-    ");
-    $events = $stmt->fetchAll();
-} else {
-    // Organizer sees only their events (if you have organizer_id column)
-    $stmt = $pdo->query("
-        SELECT e.*, 
-               (SELECT COUNT(*) FROM tickets WHERE event_id = e.id) as tickets_sold,
-               (SELECT SUM(total_amount) FROM tickets WHERE event_id = e.id) as revenue
-        FROM events e
-        ORDER BY e.event_date DESC
-    ");
-    $events = $stmt->fetchAll();
-}
+$stmt = $pdo->query("
+    SELECT e.*, 
+           (SELECT COUNT(*) FROM tickets WHERE event_id = e.id) as tickets_sold,
+           COALESCE((SELECT SUM(total_amount) FROM tickets WHERE event_id = e.id), 0) as revenue
+    FROM events e
+    ORDER BY e.event_date DESC
+");
+$events = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Manage Events</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.css">
     <style>
-        .event-status {
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .role-badge {
             display: inline-block;
-            padding: 3px 8px;
-            border-radius: 4px;
+            padding: 5px 10px;
+            border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
-        }
-        
-        .status-upcoming { background: #d4edda; color: #155724; }
-        .status-ongoing { background: #fff3cd; color: #856404; }
-        .status-past { background: #f8d7da; color: #721c24; }
-        
-        .action-buttons {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        
-        .view-btn {
-            background: #667eea;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.2);
             color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 13px;
-            display: inline-block;
         }
         
-        .edit-btn {
-            background: #28a745;
+        .logout-link {
             color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
             text-decoration: none;
-            font-size: 13px;
-            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
         }
         
-        .delete-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 13px;
-            display: inline-block;
+        .error-message {
+            background: #fee;
+            color: #c00;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
         
-        .view-btn:hover, .edit-btn:hover, .delete-btn:hover {
-            opacity: 0.8;
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .dashboard-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
         }
         
         .table-responsive {
@@ -124,7 +121,6 @@ if ($user_type == 'admin') {
             background: #f8f9fa;
             padding: 12px;
             text-align: left;
-            font-weight: 600;
         }
         
         td {
@@ -132,18 +128,50 @@ if ($user_type == 'admin') {
             border-bottom: 1px solid #e0e0e0;
         }
         
-        tr:hover {
-            background: #f8f9fa;
+        .event-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .status-upcoming { background: #d4edda; color: #155724; }
+        .status-ongoing { background: #fff3cd; color: #856404; }
+        .status-past { background: #f8d7da; color: #721c24; }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .view-btn, .edit-btn, .delete-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 13px;
+            color: white;
+        }
+        
+        .view-btn { background: #667eea; }
+        .edit-btn { background: #28a745; }
+        .delete-btn { background: #dc3545; }
+        
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="dashboard-header" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+        <div class="dashboard-header">
             <div>
-                <span class="role-badge <?php echo $user_type; ?>">
-                    <?php echo $user_type == 'admin' ? '👑 ADMIN' : '🎪 ORGANIZER'; ?>
-                </span>
+                <span class="role-badge"><?php echo $user_type == 'admin' ? '👑 ADMIN' : '🎪 ORGANIZER'; ?></span>
                 <h1>Manage Events</h1>
             </div>
             <div>
@@ -171,7 +199,7 @@ if ($user_type == 'admin') {
                             <th>Date</th>
                             <th>Venue</th>
                             <th>Price</th>
-                            <th>Tickets Sold</th>
+                            <th>Tickets</th>
                             <th>Revenue</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -202,12 +230,9 @@ if ($user_type == 'admin') {
                             <td><span class="event-status status-<?php echo $status; ?>"><?php echo $status_text; ?></span></td>
                             <td>
                                 <div class="action-buttons">
-                                    <!-- VIEW button - links to public event page -->
-                                    <a href="../event.php?id=<?php echo $event['id']; ?>" class="view-btn" target="_blank">View</a>
-                                    <!-- EDIT button -->
-                                    <a href="edit-event.php?id=<?php echo $event['id']; ?>" class="edit-btn">Edit</a>
-                                    <!-- DELETE button -->
-                                    <a href="?delete=<?php echo $event['id']; ?>" class="delete-btn" onclick="return confirm('Delete this event? All ticket data will be lost.')">Delete</a>
+                                    <a href="event.php?id=<?php echo $event['id']; ?>" class="view-btn" target="_blank">👁️ View</a>
+                                    <a href="edit-event.php?id=<?php echo $event['id']; ?>" class="edit-btn">✏️ Edit</a>
+                                    <a href="?delete=<?php echo $event['id']; ?>" class="delete-btn" onclick="return confirm('Delete this event?')">🗑️ Delete</a>
                                 </div>
                             </td>
                         </tr>

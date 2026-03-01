@@ -25,8 +25,56 @@ $events = $stmt->fetchAll();
 <head>
     <title>My Events</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.css">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            color: white;
+            background: linear-gradient(135deg, #764ba2, #9f7aea);
+        }
+        
+        .role-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        .logout-link {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        
+        .logout-link:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
         .event-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -39,11 +87,6 @@ $events = $stmt->fetchAll();
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s;
-        }
-        
-        .event-card:hover {
-            transform: translateY(-5px);
         }
         
         .event-card-header {
@@ -59,10 +102,6 @@ $events = $stmt->fetchAll();
         
         .event-card-body {
             padding: 15px;
-        }
-        
-        .event-details {
-            margin-bottom: 15px;
         }
         
         .event-details p {
@@ -110,27 +149,14 @@ $events = $stmt->fetchAll();
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
-            transition: opacity 0.3s;
-        }
-        
-        .event-actions a:hover {
-            opacity: 0.8;
-        }
-        
-        .view-btn {
-            background: #667eea;
             color: white;
         }
         
-        .edit-btn {
-            background: #28a745;
-            color: white;
-        }
+        .view-btn { background: #667eea; }
+        .edit-btn { background: #28a745; }
+        .delete-btn { background: #dc3545; }
         
-        .delete-btn {
-            background: #dc3545;
-            color: white;
-        }
+        .event-actions a:hover { opacity: 0.8; }
         
         .empty-state {
             text-align: center;
@@ -138,12 +164,6 @@ $events = $stmt->fetchAll();
             background: white;
             border-radius: 15px;
             margin-top: 20px;
-        }
-        
-        .empty-state p {
-            color: #666;
-            margin-bottom: 20px;
-            font-size: 16px;
         }
         
         .btn-primary {
@@ -156,57 +176,21 @@ $events = $stmt->fetchAll();
             font-weight: bold;
         }
         
-        .btn-primary:hover {
-            background: #764ba2;
-        }
-        
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .organizer-header {
-            background: linear-gradient(135deg, #764ba2, #9f7aea);
-        }
-        
-        .role-badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .role-badge.organizer {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-        
-        .logout-link {
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-        
-        .logout-link:hover {
-            background: rgba(255,255,255,0.3);
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .event-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="dashboard-header organizer-header">
+        <div class="dashboard-header">
             <div>
-                <span class="role-badge organizer">🎪 ORGANIZER</span>
+                <span class="role-badge">🎪 ORGANIZER</span>
                 <h1>My Events</h1>
             </div>
             <div>
@@ -229,15 +213,13 @@ $events = $stmt->fetchAll();
                         <small><?php echo date('M j, Y', strtotime($event['event_date'])); ?></small>
                     </div>
                     <div class="event-card-body">
-                        <div class="event-details">
-                            <p><strong>📍 Venue:</strong> <?php echo htmlspecialchars($event['venue']); ?></p>
-                            <p><strong>💰 Price:</strong> RWF <?php echo number_format($event['price']); ?></p>
-                        </div>
+                        <p><strong>📍 Venue:</strong> <?php echo htmlspecialchars($event['venue']); ?></p>
+                        <p><strong>💰 Price:</strong> RWF <?php echo number_format($event['price']); ?></p>
                         
                         <div class="event-stats">
                             <div class="stat">
                                 <div class="stat-value"><?php echo $event['tickets_sold'] ?: 0; ?></div>
-                                <div class="stat-label">Tickets Sold</div>
+                                <div class="stat-label">Sold</div>
                             </div>
                             <div class="stat">
                                 <div class="stat-value">RWF <?php echo number_format($event['revenue'] ?: 0); ?></div>
@@ -246,12 +228,9 @@ $events = $stmt->fetchAll();
                         </div>
                         
                         <div class="event-actions">
-                            <!-- VIEW button - links to public event page -->
-                            <a href="../event.php?id=<?php echo $event['id']; ?>" class="view-btn" target="_blank">View</a>
-                            <!-- EDIT button -->
-                            <a href="edit-event.php?id=<?php echo $event['id']; ?>" class="edit-btn">Edit</a>
-                            <!-- DELETE button - links to manage-events with delete parameter -->
-                            <a href="manage-events.php?delete=<?php echo $event['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this event? This action cannot be undone.')">Delete</a>
+                            <a href="event.php?id=<?php echo $event['id']; ?>" class="view-btn" target="_blank">👁️ View</a>
+                            <a href="edit-event.php?id=<?php echo $event['id']; ?>" class="edit-btn">✏️ Edit</a>
+                            <a href="manage-events.php?delete=<?php echo $event['id']; ?>" class="delete-btn" onclick="return confirm('Delete this event?')">🗑️ Delete</a>
                         </div>
                     </div>
                 </div>
