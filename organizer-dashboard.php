@@ -1,6 +1,5 @@
 <?php
 require_once 'config/database.php';
-session_start();
 
 // Check if organizer is logged in
 if (!isset($_SESSION['admin_id']) || $_SESSION['admin_type'] != 'organizer') {

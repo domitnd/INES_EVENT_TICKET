@@ -1,7 +1,5 @@
 <?php 
 require_once 'config/database.php';
-session_start();
-
 // Check if user is logged in (either admin or organizer)
 if (!isset($_SESSION['admin_id'])) {
     header('Location: admin-login.php');

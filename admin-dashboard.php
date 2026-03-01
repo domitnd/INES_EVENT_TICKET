@@ -1,6 +1,5 @@
 <?php
 require_once 'config/database.php';
-session_start();
 
 // Check if admin is logged in
 if (!isset($_SESSION['admin_id']) || $_SESSION['admin_type'] != 'admin') {

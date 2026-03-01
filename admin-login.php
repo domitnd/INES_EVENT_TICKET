@@ -1,6 +1,5 @@
 <?php 
 require_once 'config/database.php';
-session_start();
 
 if (isset($_SESSION['admin_id'])) {
     header('Location: ' . ($_SESSION['admin_type'] == 'admin' ? 'admin-dashboard.php' : 'organizer-dashboard.php'));

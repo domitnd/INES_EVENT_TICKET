@@ -1,6 +1,5 @@
 <?php
 require_once 'config/database.php';
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: admin-login.php');
