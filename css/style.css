@@ -402,14 +402,14 @@ td {
 
 /* Dashboard Headers */
 .admin-header {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #03532e, #0e5a37);
     padding: 20px;
     border-radius: 15px;
     color: white;
 }
 
 .organizer-header {
-    background: linear-gradient(135deg, #764ba2, #9f7aea);
+    background: linear-gradient(135deg, #03532e, #0e5a37);
     padding: 20px;
     border-radius: 15px;
     color: white;
