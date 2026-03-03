@@ -30,10 +30,13 @@ if (!$event) {
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #628d66 0%, #60a165 100%);
             min-height: 100vh;
             padding: 20px;
         }
+
+
+        
         
         .container {
             max-width: 800px;
@@ -120,7 +123,7 @@ if (!$event) {
         .btn-large {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #64a76f, #afa8b6);
             color: white;
             border: none;
             border-radius: 8px;

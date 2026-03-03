@@ -64,7 +64,7 @@ $events = $stmt->fetchAll();
             border-radius: 15px;
             margin-bottom: 20px;
             color: white;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #5ebd6e, #89c09e);
         }
         
         .role-badge {
