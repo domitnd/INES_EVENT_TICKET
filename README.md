@@ -1,3 +1,20 @@
+1. Mohammed Magzoub 
+        Role:--ROLE:HTML structure
+
+2. Mugisha Desire
+        Role: --CSS & Responsiveness Engineer
+
+3. NIYO GANZA Aristide
+        Role: --Product Planner & Documentation Lead
+              --Backend PHP MVC Engineer
+
+4. Uwase Mwamikazi Hiba 
+        Role:--CSS structure
+
+5. TURATSINZE Dominique
+        Role: --JavaScript Interaction Engineer
+              --Database, Git & Deployment Engineer
+
 # INES Event Ticket Generator 🎟️
 
 A full-stack web application for managing event registration, ticket generation, and check-in, designed for INES organizers and students.
@@ -39,37 +56,6 @@ This app automates ticket registration, provides a dashboard, and generates uniq
 
 ---
 
-## Project Structure
-
-
-app/
-├── controllers/ # App logic
-├── models/ # Database operations
-├── views/ # HTML/PHP templates
-└── config/ # Database config
-
-public/
-└── index.php # Entry point / routing
-
-assets/
-├── css/ # Styles
-├── js/ # Scripts
-└── images/ # Images
-
-config/
-├──database.php
-
-docs/
-├── problem-statement.md
-├── user-stories.md
-├── scope-nfr.md
-├── page-map.md
-└── testing.md
-
-README.md
-
-
----
 
 ## Setup & Deployment
 
