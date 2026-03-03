@@ -56,7 +56,10 @@ $selected_role = $_GET['role'] ?? 'admin'; // Default to admin
                     Login as <?php echo ucfirst($selected_role); ?>
                 </button>
             </form>
-            
+            <div class="register-link">
+    <p>Don't have an account?</p>
+    <a href="register.php" class="btn-secondary">Register Here</a>
+</div>
             <div class="demo-credentials">
                 <p><strong>Demo Credentials:</strong></p>
                 <div class="demo-grid">

@@ -33,7 +33,34 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 100px;
 }
+.register-link {
+    margin-top: 20px;
+    text-align: center;
+}
 
+.btn-secondary {
+    display: inline-block;
+    padding: 8px 18px;
+    border: 2px solid #03532e;
+    color: #03532e;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background: #03532e;
+    color: white;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 15px;
+    text-decoration: none;
+    color: #03532e;
+    font-weight: 600;
+}
 
 .events-container {
     display: grid;
