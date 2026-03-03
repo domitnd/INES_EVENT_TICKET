@@ -60,16 +60,7 @@ $selected_role = $_GET['role'] ?? 'admin'; // Default to admin
     <p>Don't have an account?</p>
     <a href="register.php" class="btn-secondary">Register Here</a>
 </div>
-            <div class="demo-credentials">
-                <p><strong>Demo Credentials:</strong></p>
-                <div class="demo-grid">
-                    <div class="demo-item <?php echo $selected_role == 'admin' ? 'highlight' : ''; ?>">
-                        <span class="role-badge admin">👑 ADMIN</span>
-                        <code>admin / admin123</code>
-                    </div>
-                    <div class="demo-item <?php echo $selected_role == 'organizer' ? 'highlight' : ''; ?>">
-                        <span class="role-badge organizer">🎪 ORGANIZER</span>
-                        <code>organizer / admin123</code>
+           
                     </div>
                 </div>
             </div>

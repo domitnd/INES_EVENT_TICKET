@@ -26,6 +26,118 @@ body {
     color: white;
 }
 
+/* Container for links under forms */
+.register-link, .login-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Card heading style */
+.card-heading {
+    font-size: 28px;
+    font-weight: 700;
+    color: #03532e;
+    margin-bottom: 25px;  /* spacing from the first input */
+    text-align: center;
+}
+
+/* Form spacing */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Input styling */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Role button spacing */
+.role-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Hide radio buttons */
+.role-buttons input {
+    display: none;
+}
+
+.role-btn {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
+    border: 2px solid #03532e;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.role-buttons input:checked + .role-btn {
+    background: linear-gradient(135deg, #03532e, #96db14);
+    color: white;
+    border: none;
+}
+
+/* Admin / Organizer colors */
+.admin-btn { border-color: #03532e; color: #03532e; }
+.organizer-btn { border-color: #96db14; color: #03532e; }
+
+/* Register/Login button links */
+.btn-secondary {
+    display: inline-block;
+    padding: 10px 25px;
+    border: 2px solid #03532e;
+    border-radius: 25px;
+    color: #03532e;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #03532e;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Back to events button */
+.back-link {
+    display: inline-block;
+    padding: 8px 20px;
+    margin-bottom: 20px;
+    border: 2px solid #96db14;
+    border-radius: 25px;
+    color: #03532e;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    background: #96db14;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Error / success spacing */
+.error-message, .success-message {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.error-message { background: #f8d7da; color: #721c24; }
+.success-message { background: #d4edda; color: #155724; }
+
 .admin-link {
     color: rgba(249, 249, 249, 0.918);
     text-decoration: none;
