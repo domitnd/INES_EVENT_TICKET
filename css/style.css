@@ -615,3 +615,10 @@ td {
         grid-template-columns: 1fr;
     }
 }
+
+@media (max-width: 670px) {
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+}
