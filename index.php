@@ -10,7 +10,7 @@
     <div class="container">
         <div class="header">
             <h1>🎫 INES Event Hub</h1>
-            <a href="admin-login.php" class="admin-link">Admin Login</a>
+          <a href="register.php" class="admin-link">Register Admin</a>
         </div>
         
         <div class="events-grid">
